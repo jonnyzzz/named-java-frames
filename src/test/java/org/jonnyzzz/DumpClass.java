@@ -47,9 +47,9 @@ public class DumpClass {
             switch (b) {
                 case 0x1:
                     final int textSize =  (d.next()<<8) + d.next();
-                    System.out.print("     UTF-8[" + textSize + "] ");
+                    System.out.print("     UTFTest-8[" + textSize + "] ");
                     final byte[] text = d.next(textSize);
-                    System.out.println(new String(text, "utf-8")); //TODO: fix UTF parse
+                    System.out.println(new String(text, "utf-8")); //TODO: fix UTFTest parse
                     break;
                 case 0x3:
                     System.out.println("     INTEGER: ");
