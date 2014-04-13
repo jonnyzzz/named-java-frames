@@ -9,8 +9,11 @@ import java.util.Arrays;
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class NamedExecutorGenerator {
+    public static final Class<?> TEMPLATE = NamedExecutorImpl.class;
+    public static final byte[] CLASS_NAME_BYTES = UTF.encode(TEMPLATE.getSimpleName().replace('.', '/') + ".class");
+    public static final byte[] METHOD_NAME_BYTES = UTF.encode("this_is_a_special_name_placeholder");
 
-    private byte[] loadClazzTemplate() {
+    private static byte[] loadClazzTemplate() {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         final InputStream stream = TEMPLATE.getResourceAsStream(TEMPLATE.getSimpleName() + ".class");
         if (stream == null) {
@@ -28,12 +31,7 @@ public class NamedExecutorGenerator {
         return bos.toByteArray();
     }
 
-    public static final Class<?> TEMPLATE = NamedExecutorImpl.class;
-    public static final String CLASS_NAME = TEMPLATE.getName();
-    public static final byte[] CLASS_NAME_BYTES = UTF.encode(TEMPLATE.getSimpleName().replace('.', '/') + ".class");
-    public static final byte[] METHOD_NAME_BYTES = UTF.encode("this_is_a_special_name_placeholder");
-
-    public byte[] generateWrapper(final String className, final String methodName) {
+    public static byte[] generateWrapper(final String className, final String methodName) {
         final ByteIterator tmpl = new ByteIterator(loadClazzTemplate());
         final ByteWriter result = new ByteWriter(tmpl.size() + 6 * className.length() + 6*methodName.length());
 

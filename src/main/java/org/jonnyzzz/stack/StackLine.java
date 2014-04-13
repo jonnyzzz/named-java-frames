@@ -3,7 +3,10 @@ package org.jonnyzzz.stack;
 import com.sun.istack.internal.NotNull;
 import org.jonnyzzz.stack.impl.InternalAction;
 import org.jonnyzzz.stack.impl.NamedExecutor;
+import org.jonnyzzz.stack.impl.NamedExecutorGenerator;
 import org.jonnyzzz.stack.impl.NamedExecutorImpl;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
@@ -60,9 +63,28 @@ public class StackLine {
 
     @NotNull
     private static NamedExecutor executor(@NotNull final String name) {
-        return new NamedExecutorImpl();
+        return myLoader.generate(name);
     }
 
+    private static final GeneratedClassLoader myLoader = new GeneratedClassLoader();
+    private static class GeneratedClassLoader extends ClassLoader {
+        private final AtomicInteger myCounter = new AtomicInteger();
+        private GeneratedClassLoader() {
+            super(NamedExecutor.class.getClassLoader());
+        }
+
+        public NamedExecutor generate(@NotNull final String name) {
+            final String clazz = "com.jonnyzzz.generated.names.generated_class_" + myCounter.incrementAndGet();
+            final byte[] bytes = NamedExecutorGenerator.generateWrapper(clazz, name);
+            final Class<?> aClass = defineClass(clazz, bytes, 0, bytes.length, null);
+
+            try {
+                return (NamedExecutor) aClass.newInstance();
+            } catch (Throwable e) {
+                throw new RuntimeException("Failed to generate class for name: " + name + ". " + e.getMessage(), e);
+            }
+        }
+    }
 
     @NotNull
     private static byte[] generateClass(@NotNull final String className,
