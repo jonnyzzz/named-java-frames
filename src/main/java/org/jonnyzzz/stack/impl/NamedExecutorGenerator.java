@@ -4,6 +4,40 @@ package org.jonnyzzz.stack.impl;
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class NamedExecutorGenerator {
+    private final byte[] myBuff = new byte[128 * 1024];
+    private int myCount = 0;
+
+    private void add(byte[] data) {
+        for (byte b : data) {
+            myBuff[myCount++] = b;
+        }
+    }
+
+    private void addBytes(int a) {
+        myBuff[myCount++] = (byte)a;
+    }
+    private void addBytes(int a, int b) {
+        myBuff[myCount++] = (byte)a;
+        myBuff[myCount++] = (byte)b;
+    }
+    private void addBytes(int a, int b, int c) {
+        myBuff[myCount++] = (byte)a;
+        myBuff[myCount++] = (byte)b;
+        myBuff[myCount++] = (byte)c;
+    }
+    private void addBytes(int a, int b, int c, int d) {
+        myBuff[myCount++] = (byte)a;
+        myBuff[myCount++] = (byte)b;
+        myBuff[myCount++] = (byte)c;
+        myBuff[myCount++] = (byte)d;
+    }
+
+    public void generateWrapper() {
+
+
+
+    }
+
 
     final int[] data = {
             0xca, 0xfe, 0xba, 0xbe,
