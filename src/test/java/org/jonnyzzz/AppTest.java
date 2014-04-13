@@ -18,7 +18,7 @@ public class AppTest {
     public void test_action() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("someMagicTestName", new StackLine.UnderStackAction<Throwable>() {
+        StackLine.stackLine("someMagicTestName", Throwable.class, new StackLine.UnderStackAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
 
@@ -33,7 +33,7 @@ public class AppTest {
     public void test_function() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("someMagicTestName", new StackLine.UnderStackFunction<Object, Throwable>() {
+        StackLine.stackLine("someMagicTestName", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
             public Object execute() throws Throwable {
                 result.set(stackTrace());
                 return 42;

@@ -2,20 +2,51 @@ package org.jonnyzzz.stack;
 
 import com.sun.istack.internal.NotNull;
 import org.jonnyzzz.stack.impl.InternalAction;
+import org.jonnyzzz.stack.impl.NamedExecutor;
+import org.jonnyzzz.stack.impl.NamedExecutorImpl;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class StackLine {
     public static <E extends Throwable> void stackLine(@NotNull final String name,
-                                                       @NotNull final UnderStackAction<E> action) throws E {
+                                                       @NotNull final Class<E> exception,
+                                                       @NotNull final UnderStackAction<E> fun) throws E {
 
+        try {
+            executor(name).execute(new InternalAction() {
+                public Object execute() throws Throwable {
+                    fun.execute();
+                    return null;
+                }
+            });
+        } catch (Throwable throwable) {
+            if (exception.isInstance(throwable)) {
+                throw exception.cast(throwable);
+            } else {
+                throw new RuntimeException(throwable);
+            }
+        }
     }
 
 
     public static <R, E extends Throwable> void stackLine(@NotNull final String name,
-                                                          @NotNull final UnderStackFunction<R, E> action) throws E {
-
+                                                          @NotNull final Class<E> exception,
+                                                          @NotNull final UnderStackFunction<R, E> fun) throws E {
+        try {
+            executor(name).execute(new InternalAction() {
+                public Object execute() throws Throwable {
+                    fun.execute();
+                    return null;
+                }
+            });
+        } catch (Throwable throwable) {
+            if (exception.isInstance(throwable)) {
+                throw exception.cast(throwable);
+            } else {
+                throw new RuntimeException(throwable);
+            }
+        }
     }
 
     public interface UnderStackAction<E extends Throwable> {
@@ -27,21 +58,9 @@ public class StackLine {
     }
 
 
-    private static <R, E extends Exception> InternalAction asAction(@NotNull final UnderStackFunction<R,E> fun) {
-        return new InternalAction() {
-            public Object execute() throws Throwable {
-                return fun.execute();
-            }
-        };
-    }
-
-    private static <E extends Exception> InternalAction asAction(@NotNull final UnderStackAction<E> fun) {
-        return new InternalAction() {
-            public Object execute() throws Throwable {
-                fun.execute();
-                return null;
-            }
-        };
+    @NotNull
+    private static NamedExecutor executor(@NotNull final String name) {
+        return new NamedExecutorImpl();
     }
 
 

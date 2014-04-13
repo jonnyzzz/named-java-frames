@@ -6,5 +6,5 @@ import com.sun.istack.internal.NotNull;
 * @author Eugene Petrenko (eugene.petrenko@gmail.com)
 */
 public interface NamedExecutor {
-    Object execute(@NotNull final InternalAction action);
+    Object execute(@NotNull final InternalAction action) throws Throwable;
 }
