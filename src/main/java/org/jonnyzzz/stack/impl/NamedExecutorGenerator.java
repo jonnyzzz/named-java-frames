@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public class NamedExecutorGenerator {
     public static final Class<?> TEMPLATE = NamedExecutorImpl.class;
-    public static final byte[] CLASS_NAME_BYTES = UTF.encode(TEMPLATE.getSimpleName().replace('.', '/') + ".class");
+    public static final byte[] CLASS_NAME_BYTES = UTF.encode(TEMPLATE.getName().replace('.', '/'));
     public static final byte[] METHOD_NAME_BYTES = UTF.encode("this_is_a_special_name_placeholder");
 
     private static byte[] loadClazzTemplate() {
@@ -54,7 +54,7 @@ public class NamedExecutorGenerator {
                     if (Arrays.equals(text, METHOD_NAME_BYTES)) {
                         text = UTF.encode(methodName);
                     } else if (Arrays.equals(text, CLASS_NAME_BYTES)) {
-                        text = UTF.encode(className);
+                        text = UTF.encode(className.replace('.', '/'));
                     }
 
                     result.addBytes(text.length>>8, text.length & 0xff);
