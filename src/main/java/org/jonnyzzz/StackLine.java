@@ -92,7 +92,7 @@ public class StackLine {
                 0x0, 0x0, //fields count + data
                 0x0, 0x2, //methods count
                 /* method info*/
-                0x0, 0x1, //access_flags
+                0x0, 0x1, //access_flags ACC_PUBLIC
                 0x0, 0x5, //name index
                 0x0, 0x6, //descriptor index
                 0x0, 0x1, //attributes count
