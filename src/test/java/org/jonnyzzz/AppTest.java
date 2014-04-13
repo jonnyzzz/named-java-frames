@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -55,6 +56,20 @@ public class AppTest {
 
         final String s = result.get();
         Assert.assertTrue(s, s.contains("вот это вот тут так получилось"));
+    }
+
+    @Test(timeout = 500)
+    public void test_should_not_generate_too_may_classes() throws Throwable {
+        ///this test should not slowdown
+        final AtomicInteger result = new AtomicInteger();
+        for(int i = 0 ; i < 10 * 1000; i++) {
+            StackLine.stackLine("вот это вот тут так получилось", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
+                public Object execute() throws Throwable {
+                    result.incrementAndGet();
+                    return 42;
+                }
+            });
+        }
     }
 
 
