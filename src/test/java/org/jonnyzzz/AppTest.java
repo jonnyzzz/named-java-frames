@@ -1,6 +1,7 @@
 package org.jonnyzzz;
 
 import com.sun.istack.internal.NotNull;
+import org.jonnyzzz.stack.StackLine;
 import org.junit.Assert;
 import org.junit.Test;
 

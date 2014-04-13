@@ -1,6 +1,7 @@
-package org.jonnyzzz;
+package org.jonnyzzz.stack;
 
 import com.sun.istack.internal.NotNull;
+import org.jonnyzzz.stack.impl.InternalAction;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
@@ -12,19 +13,35 @@ public class StackLine {
     }
 
 
+    public static <R, E extends Throwable> void stackLine(@NotNull final String name,
+                                                          @NotNull final UnderStackFunction<R, E> action) throws E {
+
+    }
+
     public interface UnderStackAction<E extends Throwable> {
         void execute() throws E;
     }
 
-
-    public interface InternalAction {
-        void execute() throws Throwable;
+    public interface UnderStackFunction<R, E extends Throwable> {
+        R execute() throws E;
     }
 
-    public static class ForwardExecution {
-        public static void execute(@NotNull final InternalAction action) throws Throwable {
-            action.execute();
-        }
+
+    private static <R, E extends Exception> InternalAction asAction(@NotNull final UnderStackFunction<R,E> fun) {
+        return new InternalAction() {
+            public Object execute() throws Throwable {
+                return fun.execute();
+            }
+        };
+    }
+
+    private static <E extends Exception> InternalAction asAction(@NotNull final UnderStackAction<E> fun) {
+        return new InternalAction() {
+            public Object execute() throws Throwable {
+                fun.execute();
+                return null;
+            }
+        };
     }
 
 
