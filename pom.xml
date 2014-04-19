@@ -29,7 +29,7 @@
     <artifactId>named-frames</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0-SNAPSHOT</version>
-    <name>namedMethods</name>
+    <name>named-frames</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
