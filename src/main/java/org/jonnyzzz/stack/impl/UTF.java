@@ -34,7 +34,7 @@ import java.util.Arrays;
 public class UTF {
     @NotNull
     public static byte[] encode(@NotNull final String str) {
-        final byte[] result = new byte[6 * 64 * 1024]; //class-file strings are limited with 64k
+        final byte[] result = new byte[3 * str.length()]; //class-file strings are limited with 64k
         int cnt = 0;
         for (char c : str.toCharArray()) {
             final int z = (int) c;
