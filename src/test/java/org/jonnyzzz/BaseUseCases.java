@@ -5,17 +5,16 @@ import org.jonnyzzz.stack.NamedStackFrame;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest {
+import static org.jonnyzzz.Stack.stackTrace;
 
+/**
+ * @author Eugene Petrenko (eugene.petrenko@gmail.com)
+ */
+public abstract class BaseUseCases {
     @Test
     public void test_names_clash_execute() throws Throwable {
 
@@ -134,20 +133,5 @@ public class AppTest {
     }
 
     @NotNull
-    private NamedStackFrame call() {
-        return NamedStackFrame.global();
-    }
-
-
-    @NotNull
-    private static String stackTrace() {
-        try {
-            throw new Exception();
-        } catch (Exception e) {
-            final StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            System.out.printf(sw.toString());
-            return sw.toString();
-        }
-    }
+    protected abstract NamedStackFrame call();
 }
