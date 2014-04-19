@@ -1,7 +1,7 @@
 package org.jonnyzzz;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.impl.gen.jcl.NamedExecutorImpl;
+import org.jonnyzzz.stack.impl.gen.jcl.JavaGeneratorTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class DumpClass {
         System.out.println("Hello World!");
 
 
-        final Class<NamedExecutorImpl> aClass = NamedExecutorImpl.class;
+        final Class<JavaGeneratorTemplate> aClass = JavaGeneratorTemplate.class;
         InputStream stream = aClass.getResourceAsStream(aClass.getSimpleName() + ".class");
         int sz;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
