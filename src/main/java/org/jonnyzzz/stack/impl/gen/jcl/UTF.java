@@ -44,9 +44,9 @@ public class UTF {
                 result[cnt++] = (byte) (0xc0 | (0x1f & (z >> 6)));
                 result[cnt++] = (byte) (0x80 | (0x3f & z));
             } else {
-                result[cnt++] = (byte) ( 0xe0 | (0x0f & (z >>12)));
-                result[cnt++] = (byte) ( 0x80 | (0x3f & (z>>6)));
-                result[cnt++] = (byte) ( 0x80 | (0x3f & z));
+                result[cnt++] = (byte) (0xe0 | (0x0f & (z >> 12)));
+                result[cnt++] = (byte) (0x80 | (0x3f & (z >> 6)));
+                result[cnt++] = (byte) (0x80 | (0x3f & z));
             }
         }
         return Arrays.copyOf(result, cnt);
