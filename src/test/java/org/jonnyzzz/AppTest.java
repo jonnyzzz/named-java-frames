@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -51,6 +52,35 @@ public class AppTest {
             public void execute() throws Throwable {
                 result.set(stackTrace());
 
+            }
+        });
+
+        final String s = result.get();
+        Assert.assertTrue(s, s.contains("someMagicTestName"));
+    }
+
+    @Test
+    public void test_runnable() throws Throwable {
+
+        final AtomicReference<String> result = new AtomicReference<String>();
+        StackLine.stackLine("someMagicTestName", new Runnable() {
+            public void run() {
+                result.set(stackTrace());
+            }
+        });
+
+        final String s = result.get();
+        Assert.assertTrue(s, s.contains("someMagicTestName"));
+    }
+
+    @Test
+    public void test_callable() throws Throwable {
+
+        final AtomicReference<String> result = new AtomicReference<String>();
+        StackLine.stackLine("someMagicTestName", new Callable<Object>() {
+            public Object call() {
+                result.set(stackTrace());
+                return 42;
             }
         });
 

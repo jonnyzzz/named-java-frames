@@ -9,6 +9,10 @@ import java.util.concurrent.Callable;
 import static org.jonnyzzz.stack.impl.NamedExecutors.executor;
 
 /**
+ * Updates execution stack of the thread to contain a frame
+ * with a given name.
+ *
+ *
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class StackLine {
