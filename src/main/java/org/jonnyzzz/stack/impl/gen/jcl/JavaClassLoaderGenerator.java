@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 */
 public class JavaClassLoaderGenerator extends ClassLoader implements NamedExecutorsGenerator {
     private final AtomicInteger myCounter = new AtomicInteger();
+
     public JavaClassLoaderGenerator() {
         super(NamedExecutor.class.getClassLoader());
     }
