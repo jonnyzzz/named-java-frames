@@ -1,16 +1,18 @@
 package org.jonnyzzz.stack.impl;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.Callable;
+
+import static org.jonnyzzz.stack.NamedStackFrame.FrameAction;
+import static org.jonnyzzz.stack.NamedStackFrame.FrameFunction;
 
 /**
-* @author Eugene Petrenko (eugene.petrenko@gmail.com)
-*/
+ * @author Eugene Petrenko (eugene.petrenko@gmail.com)
+ */
 public interface NamedExecutor {
-    /**
-     * The wired name allows to simplify further renaming tasks to
-     * avoid changing more in the bytecode
-     */
-    @Nullable
-    Object _(@NotNull InternalAction action) throws Throwable;
+    <V> V _(@NotNull final Callable<V> fun) throws Exception;
+    void _(@NotNull final Runnable fun);
+    <E extends Throwable> void _(@NotNull final FrameAction<E> fun) throws E;
+    <R, E extends Throwable> R _(@NotNull final FrameFunction<R, E> fun) throws E;
 }

@@ -1,9 +1,7 @@
 package org.jonnyzzz.stack;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jonnyzzz.stack.impl.CachedNamedExecutors;
-import org.jonnyzzz.stack.impl.InternalAction;
 import org.jonnyzzz.stack.impl.NamedExecutor;
 import org.jonnyzzz.stack.impl.NamedExecutors;
 
@@ -18,77 +16,23 @@ import java.util.concurrent.Callable;
 public abstract class NamedStackFrame {
     public <V> V frame(@NotNull final String name,
                        @NotNull final Callable<V> fun) throws Exception {
-        try {
-            //noinspection unchecked
-            return (V) executor(name)._(new InternalAction() {
-                @Nullable
-                public Object execute() throws Exception {
-                    return fun.call();
-                }
-            });
-        } catch (Throwable th) {
-            if (th instanceof Exception) {
-                throw (Exception) th;
-            } else {
-                return wrapUnexpectedException(th);
-            }
-        }
+        return executor(name)._(fun);
     }
 
     public void frame(@NotNull final String name,
                       @NotNull final Runnable fun) {
-
-        try {
-            executor(name)._(new InternalAction() {
-                @Nullable
-                public Object execute() throws Throwable {
-                    fun.run();
-                    return null;
-                }
-            });
-        } catch (Throwable throwable) {
-            wrapUnexpectedException(throwable);
-        }
+        executor(name)._(fun);
     }
 
     public <E extends Throwable> void frame(@NotNull final String name,
-                                            @NotNull final Class<E> exception,
                                             @NotNull final FrameAction<E> fun) throws E {
-        try {
-            executor(name)._(new InternalAction() {
-                @Nullable
-                public Object execute() throws Throwable {
-                    fun.execute();
-                    return null;
-                }
-            });
-        } catch (Throwable throwable) {
-            if (exception.isInstance(throwable)) {
-                throw exception.cast(throwable);
-            } else {
-                wrapUnexpectedException(throwable);
-            }
-        }
+        executor(name)._(fun);
     }
 
-    public <R, E extends Throwable> void frame(@NotNull final String name,
-                                               @NotNull final Class<E> exception,
-                                               @NotNull final FrameFunction<R, E> fun) throws E {
-        try {
-            executor(name)._(new InternalAction() {
-                @Nullable
-                public Object execute() throws Throwable {
-                    fun.execute();
-                    return null;
-                }
-            });
-        } catch (Throwable throwable) {
-            if (exception.isInstance(throwable)) {
-                throw exception.cast(throwable);
-            } else {
-                wrapUnexpectedException(throwable);
-            }
-        }
+    public <R, E extends Throwable> R frame(@NotNull final String name,
+                                            @NotNull final FrameFunction<R, E> fun) throws E {
+
+        return executor(name)._(fun);
     }
 
     public interface FrameAction<E extends Throwable> {
@@ -102,11 +46,6 @@ public abstract class NamedStackFrame {
     @NotNull
     protected abstract NamedExecutor executor(@NotNull final String name);
 
-    @NotNull
-    protected <V> V wrapUnexpectedException(@NotNull final Throwable th) {
-        throw new RuntimeException("Undeclared exception. " + th.getMessage(), th);
-    }
-
     /**
      * Allows to re-use all generated NamedStackFrame proxies
      * for all used names. Caches are stored in static variable
@@ -119,6 +58,7 @@ public abstract class NamedStackFrame {
      *
      * @return globally-cached factory instance
      */
+
     @NotNull
     public static NamedStackFrame global() {
         return GlobalCachedNamedStackFrames.INSTANCE;
@@ -130,6 +70,7 @@ public abstract class NamedStackFrame {
      * only be cleaned up with the object instance
      * <br />
      * Generated proxies cleanup depends upon JVM classes unloading
+     *
      * @return fresh instance
      */
     @NotNull
