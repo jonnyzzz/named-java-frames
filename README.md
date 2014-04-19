@@ -41,7 +41,7 @@ to be widely used without dependencies resolution hell
 License
 -------
 
-*MIT license*
+*MIT License*
 
 For more details, see LICENSE.txt in the repository
 
