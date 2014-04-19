@@ -1,5 +1,6 @@
 package org.jonnyzzz;
 
+import org.jetbrains.annotations.NotNull;
 import org.jonnyzzz.stack.StackLine;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,6 +34,7 @@ public class AppTest {
     public void test_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
         StackLine.stackLine("someMagicTestName", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
+            @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
                 return 42;
@@ -47,6 +49,7 @@ public class AppTest {
     public void test_long_names_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
         StackLine.stackLine("вот это вот тут так получилось", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
+            @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
                 return 42;
@@ -63,6 +66,7 @@ public class AppTest {
         final AtomicInteger result = new AtomicInteger();
         for(int i = 0 ; i < 10 * 1000; i++) {
             StackLine.stackLine("вот это вот тут так получилось", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
+                @NotNull
                 public Object execute() throws Throwable {
                     result.incrementAndGet();
                     return 42;
@@ -72,6 +76,7 @@ public class AppTest {
     }
 
 
+    @NotNull
     private static String stackTrace() {
         try {
             throw new Exception();

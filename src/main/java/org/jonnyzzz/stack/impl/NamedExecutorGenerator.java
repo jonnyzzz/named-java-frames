@@ -1,5 +1,7 @@
 package org.jonnyzzz.stack.impl;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +15,7 @@ public class NamedExecutorGenerator {
     public static final byte[] CLASS_NAME_BYTES = UTF.encode(TEMPLATE.getName().replace('.', '/'));
     public static final byte[] METHOD_NAME_BYTES = UTF.encode("this_is_a_special_name_placeholder");
 
+    @NotNull
     private static byte[] loadClazzTemplate() {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         final InputStream stream = TEMPLATE.getResourceAsStream(TEMPLATE.getSimpleName() + ".class");
@@ -31,16 +34,17 @@ public class NamedExecutorGenerator {
         return bos.toByteArray();
     }
 
-    public static byte[] generateWrapper(final String className, final String methodName) {
+    @NotNull
+    public static byte[] generateWrapper(@NotNull final String className, @NotNull final String methodName) {
         final ByteIterator tmpl = new ByteIterator(loadClazzTemplate());
-        final ByteWriter result = new ByteWriter(tmpl.size() + 6 * className.length() + 6*methodName.length());
+        final ByteWriter result = new ByteWriter(tmpl.size() + 6 * className.length() + 6 * methodName.length());
 
-        result.add(tmpl.next(4)); //0xCAFEBABE
-        result.add(tmpl.next(4)); //version
+        result.addBytes(tmpl.next(4)); //0xCAFEBABE
+        result.addBytes(tmpl.next(4)); //version
 
         final int constantsTableSize_high = tmpl.next();
         final int constantsTableSize_low = tmpl.next();
-        final int constantsTableSize = (constantsTableSize_high<<8) + constantsTableSize_low;
+        final int constantsTableSize = (constantsTableSize_high << 8) + constantsTableSize_low;
         result.addBytes(constantsTableSize_high, constantsTableSize_low);
 
         for (int i = 0; i < constantsTableSize - 1; i++) {
@@ -49,7 +53,7 @@ public class NamedExecutorGenerator {
 
             switch (b) {
                 case 0x1:
-                    byte[] text = tmpl.next((tmpl.next()<<8) + tmpl.next());
+                    byte[] text = tmpl.next((tmpl.next() << 8) + tmpl.next());
 
                     if (Arrays.equals(text, METHOD_NAME_BYTES)) {
                         text = UTF.encode(methodName);
@@ -57,26 +61,26 @@ public class NamedExecutorGenerator {
                         text = UTF.encode(className.replace('.', '/'));
                     }
 
-                    result.addBytes(text.length>>8, text.length & 0xff);
-                    result.add(text);
+                    result.addBytes(text.length >> 8, text.length & 0xff);
+                    result.addBytes(text);
                     break;
                 case 0x3: //integer
                 case 0x4: //float
-                    result.add(tmpl.next(4));
+                    result.addBytes(tmpl.next(4));
                     break;
                 case 0x5: //long
                 case 0x6: //double
-                    result.add(tmpl.next(8));
+                    result.addBytes(tmpl.next(8));
                     break;
                 case 0x7: //class_ref
                 case 0x8: //method_ref
-                    result.add(tmpl.next(2));
+                    result.addBytes(tmpl.next(2));
                     break;
                 case 0x9: //FIELD_REF
                 case 0xa: //METHOD_REF
                 case 0xb: //INTERFACE_METHOD_REF
                 case 0xc: //NAME_AND_TYPE
-                    result.add(tmpl.next(4));
+                    result.addBytes(tmpl.next(4));
                     break;
                 default:
                     throw new RuntimeException("Unknown attribute type: " + Integer.toHexString(b));
@@ -92,18 +96,20 @@ public class NamedExecutorGenerator {
         private final byte[] myData;
         private int myCount = 0;
 
-        public ByteIterator(byte[] myData) {
-            this.myData = myData;
+        public ByteIterator(@NotNull final byte[] data) {
+            myData = data;
         }
 
         public int next() {
             return myData[myCount++];
         }
 
-        public byte[] next(int sz) {
-            byte[] r = new byte[sz];
-            for(int i = 0; i < sz; i++) r[i] = myData[myCount++];
-            return r;
+        @NotNull
+        public byte[] next(final int sz) {
+            final int from = myCount;
+            final int to = from + sz;
+            myCount += sz;
+            return Arrays.copyOfRange(myData, from, to);
         }
 
         public boolean hasNext() {
@@ -119,25 +125,26 @@ public class NamedExecutorGenerator {
         private final byte[] myBuff;
         private int myCount = 0;
 
-        private ByteWriter(int maxSize) {
+        public ByteWriter(final int maxSize) {
             myBuff = new byte[maxSize];
         }
 
-        public void add(byte[] data) {
+        public void addBytes(@NotNull byte[] data) {
             for (byte b : data) {
                 myBuff[myCount++] = b;
             }
         }
 
-        public void addBytes(int a) {
+        public void addBytes(final int a) {
             myBuff[myCount++] = (byte) a;
         }
 
-        public void addBytes(int a, int b) {
+        public void addBytes(final int a, final int b) {
             myBuff[myCount++] = (byte) a;
             myBuff[myCount++] = (byte) b;
         }
 
+        @NotNull
         public byte[] toByteArray() {
             return Arrays.copyOf(myBuff, myCount);
         }

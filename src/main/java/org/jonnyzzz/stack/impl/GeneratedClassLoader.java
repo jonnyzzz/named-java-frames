@@ -1,5 +1,7 @@
 package org.jonnyzzz.stack.impl;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -11,7 +13,8 @@ public class GeneratedClassLoader extends ClassLoader {
         super(NamedExecutor.class.getClassLoader());
     }
 
-    public NamedExecutor generate(final String name) {
+    @NotNull
+    public NamedExecutor generate(@NotNull final String name) {
         final String clazz = "com.jonnyzzz.generated.names.generated_class_" + myCounter.incrementAndGet();
         final byte[] bytes = NamedExecutorGenerator.generateWrapper(clazz, name);
 
@@ -25,11 +28,12 @@ public class GeneratedClassLoader extends ClassLoader {
         }
     }
 
-    private Class<?> defineClazz(final String name, final byte[] bytes) {
+    @NotNull
+    private Class<?> defineClazz(@NotNull final String name, @NotNull final byte[] bytes) {
         return defineClass(name, bytes, 0, bytes.length);
     }
 
-    private void definePackage(final String name) {
+    private void definePackage(@NotNull final String name) {
         final int i = name.lastIndexOf('.');
         if (i >= 0) {
             final String pkgName = name.substring(0, i);

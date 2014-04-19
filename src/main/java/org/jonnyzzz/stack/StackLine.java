@@ -1,54 +1,58 @@
 package org.jonnyzzz.stack;
 
-import org.jonnyzzz.stack.impl.GeneratedClassLoader;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jonnyzzz.stack.impl.InternalAction;
-import org.jonnyzzz.stack.impl.NamedExecutor;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Callable;
+
+import static org.jonnyzzz.stack.impl.NamedExecutors.executor;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class StackLine {
-    public static <E extends Throwable> void stackLine(final String name,
-                                                       final Class<E> exception,
-                                                       final UnderStackAction<E> fun) throws E {
+    public static <V> V stackLine(@NotNull final String name,
+                                  @NotNull final Callable<V> fun) throws Exception {
         try {
-            executor(name).execute(new InternalAction() {
-                public Object execute() throws Throwable {
-                    fun.execute();
-                    return null;
+            //noinspection unchecked
+            return (V) executor(name).execute(new InternalAction() {
+                @Nullable
+                public Object execute() throws Exception {
+                    return fun.call();
                 }
             });
-        } catch (Throwable throwable) {
-            if (exception.isInstance(throwable)) {
-                throw exception.cast(throwable);
+        } catch (Throwable th) {
+            if (th instanceof Exception) {
+                throw (Exception)th;
             } else {
-                throw new RuntimeException(throwable);
+                return wrapUnexpectedException(th);
             }
         }
     }
 
-    public static void stackLine(final String name, final Runnable fun) {
+    public static void stackLine(@NotNull final String name,
+                                 @NotNull final Runnable fun) {
 
         try {
             executor(name).execute(new InternalAction() {
+                @Nullable
                 public Object execute() throws Throwable {
                     fun.run();
                     return null;
                 }
             });
         } catch (Throwable throwable) {
-            throw new RuntimeException(throwable);
+            wrapUnexpectedException(throwable);
         }
     }
 
-
-    public static <R, E extends Throwable> void stackLine(final String name,
-                                                          final Class<E> exception,
-                                                          final UnderStackFunction<R, E> fun) throws E {
+    public static <E extends Throwable> void stackLine(@NotNull final String name,
+                                                       @NotNull final Class<E> exception,
+                                                       @NotNull final UnderStackAction<E> fun) throws E {
         try {
             executor(name).execute(new InternalAction() {
+                @Nullable
                 public Object execute() throws Throwable {
                     fun.execute();
                     return null;
@@ -58,7 +62,27 @@ public class StackLine {
             if (exception.isInstance(throwable)) {
                 throw exception.cast(throwable);
             } else {
-                throw new RuntimeException(throwable);
+                wrapUnexpectedException(throwable);
+            }
+        }
+    }
+
+    public static <R, E extends Throwable> void stackLine(@NotNull final String name,
+                                                          @NotNull final Class<E> exception,
+                                                          @NotNull final UnderStackFunction<R, E> fun) throws E {
+        try {
+            executor(name).execute(new InternalAction() {
+                @Nullable
+                public Object execute() throws Throwable {
+                    fun.execute();
+                    return null;
+                }
+            });
+        } catch (Throwable throwable) {
+            if (exception.isInstance(throwable)) {
+                throw exception.cast(throwable);
+            } else {
+                wrapUnexpectedException(throwable);
             }
         }
     }
@@ -71,19 +95,9 @@ public class StackLine {
         R execute() throws E;
     }
 
-    private static NamedExecutor executor(final String name) {
-        //lazy & non-blocking cache created executors to avoid too
-        //may classes from loading
-
-        final NamedExecutor executor = myLazyCache.get(name);
-        if (executor != null) return executor;
-
-        final NamedExecutor newExecutor = myLoader.generate(name);
-        final NamedExecutor oldExecutor = myLazyCache.putIfAbsent(name, newExecutor);
-        return oldExecutor != null ? oldExecutor : newExecutor;
+    @NotNull
+    private static <V> V wrapUnexpectedException(@NotNull final Throwable th) {
+        throw new RuntimeException("Undeclared exception. " + th.getMessage(), th);
     }
-
-    private static final GeneratedClassLoader myLoader = new GeneratedClassLoader();
-    private static final ConcurrentHashMap<String, NamedExecutor> myLazyCache = new ConcurrentHashMap<String, NamedExecutor>();
 
 }

@@ -1,13 +1,15 @@
 package org.jonnyzzz.stack.impl;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class UTF {
-
-    public static byte[] encode(String str) {
+    @NotNull
+    public static byte[] encode(@NotNull final String str) {
         final byte[] result = new byte[6 * 64 * 1024]; //class-file strings are limited with 64k
         int cnt = 0;
         for (char c : str.toCharArray()) {

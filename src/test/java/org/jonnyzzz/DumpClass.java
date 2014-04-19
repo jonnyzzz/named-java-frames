@@ -1,5 +1,6 @@
 package org.jonnyzzz;
 
+import org.jetbrains.annotations.NotNull;
 import org.jonnyzzz.stack.impl.NamedExecutorImpl;
 
 import java.io.ByteArrayOutputStream;
@@ -98,7 +99,7 @@ public class DumpClass {
 
     }
 
-    private static void line(String comment, String... data) {
+    private static void line(@NotNull final String comment, @NotNull String... data) {
         for (String s : data) {
             System.out.print(s);
             System.out.print(", ");
@@ -110,22 +111,24 @@ public class DumpClass {
         private final byte[] myData;
         private int myCount = 0;
 
-        private ByteIterator(byte[] myData) {
-            this.myData = myData;
+        private ByteIterator(@NotNull final byte[] data) {
+            myData = data;
         }
 
         public int next() {
             return myData[myCount++];
         }
 
-        public byte[] next(int sz) {
+        @NotNull
+        public byte[] next(final int sz) {
             byte[] r = new byte[sz];
             for(int i = 0; i < sz; i++) r[i] = myData[myCount++];
             return r;
         }
     }
 
-    private static String hex(int sz) {
+    @NotNull
+    private static String hex(final int sz) {
         if (sz <= 0xf) {
             return "0x0" + Integer.toHexString(sz);
         } else {

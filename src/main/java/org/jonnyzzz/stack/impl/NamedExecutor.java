@@ -1,8 +1,12 @@
 package org.jonnyzzz.stack.impl;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
 * @author Eugene Petrenko (eugene.petrenko@gmail.com)
 */
 public interface NamedExecutor {
-    Object execute(InternalAction action) throws Throwable;
+    @Nullable
+    Object execute(@NotNull InternalAction action) throws Throwable;
 }
