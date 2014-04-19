@@ -118,11 +118,12 @@ public abstract class BaseUseCases {
     }
 
     @Test(timeout = 500)
-    public void test_should_not_generate_too_may_classes() throws Throwable {
+    public void test_should_not_generate_too_many_same_classes() throws Throwable {
         ///this test should not slowdown
         final AtomicInteger result = new AtomicInteger();
+        final NamedStackFrame call = call();
         for(int i = 0 ; i < 10 * 1000; i++) {
-            call().stackLine("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
+            call.stackLine("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
                 @NotNull
                 public Object execute() throws Throwable {
                     result.incrementAndGet();
