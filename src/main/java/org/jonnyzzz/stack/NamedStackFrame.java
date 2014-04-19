@@ -15,7 +15,7 @@ import static org.jonnyzzz.stack.impl.NamedExecutors.executor;
  *
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
-public class StackLine {
+public class NamedStackFrame {
     public static <V> V stackLine(@NotNull final String name,
                                   @NotNull final Callable<V> fun) throws Exception {
         try {

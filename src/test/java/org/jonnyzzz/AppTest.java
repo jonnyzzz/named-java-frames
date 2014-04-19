@@ -1,7 +1,7 @@
 package org.jonnyzzz;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.StackLine;
+import org.jonnyzzz.stack.NamedStackFrame;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class AppTest {
     public void test_names_clash_execute() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("execute", Throwable.class, new StackLine.UnderStackAction<Throwable>() {
+        NamedStackFrame.stackLine("execute", Throwable.class, new NamedStackFrame.UnderStackAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
             }
@@ -34,7 +34,7 @@ public class AppTest {
     public void test_names_clash_toString() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("toString", Throwable.class, new StackLine.UnderStackAction<Throwable>() {
+        NamedStackFrame.stackLine("toString", Throwable.class, new NamedStackFrame.UnderStackAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
             }
@@ -48,7 +48,7 @@ public class AppTest {
     public void test_action() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("someMagicTestName", Throwable.class, new StackLine.UnderStackAction<Throwable>() {
+        NamedStackFrame.stackLine("someMagicTestName", Throwable.class, new NamedStackFrame.UnderStackAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
 
@@ -63,7 +63,7 @@ public class AppTest {
     public void test_runnable() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("someMagicTestName", new Runnable() {
+        NamedStackFrame.stackLine("someMagicTestName", new Runnable() {
             public void run() {
                 result.set(stackTrace());
             }
@@ -77,7 +77,7 @@ public class AppTest {
     public void test_callable() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("someMagicTestName", new Callable<Object>() {
+        NamedStackFrame.stackLine("someMagicTestName", new Callable<Object>() {
             public Object call() {
                 result.set(stackTrace());
                 return 42;
@@ -91,7 +91,7 @@ public class AppTest {
     @Test
     public void test_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("someMagicTestName", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
+        NamedStackFrame.stackLine("someMagicTestName", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
             @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
@@ -106,7 +106,7 @@ public class AppTest {
     @Test
     public void test_long_names_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        StackLine.stackLine("вот это вот тут так получилось", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
+        NamedStackFrame.stackLine("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
             @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
@@ -123,7 +123,7 @@ public class AppTest {
         ///this test should not slowdown
         final AtomicInteger result = new AtomicInteger();
         for(int i = 0 ; i < 10 * 1000; i++) {
-            StackLine.stackLine("вот это вот тут так получилось", Throwable.class, new StackLine.UnderStackFunction<Object, Throwable>() {
+            NamedStackFrame.stackLine("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
                 @NotNull
                 public Object execute() throws Throwable {
                     result.incrementAndGet();
