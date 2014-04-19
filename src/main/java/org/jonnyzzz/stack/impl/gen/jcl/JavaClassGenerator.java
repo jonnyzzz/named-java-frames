@@ -11,8 +11,8 @@ import java.util.Arrays;
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
-public class NamedExecutorGenerator {
-    public static final Class<?> TEMPLATE = NamedExecutorImpl.class;
+public class JavaClassGenerator {
+    public static final Class<?> TEMPLATE = JavaGeneratorTemplate.class;
     public static final byte[] CLASS_NAME_BYTES = UTF.encode(TEMPLATE.getName().replace('.', '/'));
     public static final byte[] METHOD_NAME_BYTES = UTF.encode("this_is_a_special_name_placeholder");
 
