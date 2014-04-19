@@ -55,4 +55,6 @@ The project is build with Maven
 Builds
 ------
 
+[![Build Status](https://travis-ci.org/jonnyzzz/named-java-frames.svg?branch=master)](https://travis-ci.org/jonnyzzz/named-java-frames)
+
 TBD
