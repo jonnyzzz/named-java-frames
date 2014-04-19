@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jonnyzzz.stack.impl;
+package org.jonnyzzz.stack.impl.gen.jcl;
 
 import org.jetbrains.annotations.NotNull;
 

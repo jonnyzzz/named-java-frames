@@ -25,7 +25,7 @@
 package org.jonnyzzz;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.impl.UTF;
+import org.jonnyzzz.stack.impl.gen.jcl.UTF;
 import org.junit.Assert;
 import org.junit.Test;
 
