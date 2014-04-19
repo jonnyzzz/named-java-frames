@@ -16,8 +16,8 @@ import java.util.concurrent.Callable;
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public abstract class NamedStackFrame {
-    public <V> V stackLine(@NotNull final String name,
-                           @NotNull final Callable<V> fun) throws Exception {
+    public <V> V frame(@NotNull final String name,
+                       @NotNull final Callable<V> fun) throws Exception {
         try {
             //noinspection unchecked
             return (V) executor(name)._(new InternalAction() {
@@ -35,8 +35,8 @@ public abstract class NamedStackFrame {
         }
     }
 
-    public void stackLine(@NotNull final String name,
-                          @NotNull final Runnable fun) {
+    public void frame(@NotNull final String name,
+                      @NotNull final Runnable fun) {
 
         try {
             executor(name)._(new InternalAction() {
@@ -51,9 +51,9 @@ public abstract class NamedStackFrame {
         }
     }
 
-    public <E extends Throwable> void stackLine(@NotNull final String name,
-                                                @NotNull final Class<E> exception,
-                                                @NotNull final UnderStackAction<E> fun) throws E {
+    public <E extends Throwable> void frame(@NotNull final String name,
+                                            @NotNull final Class<E> exception,
+                                            @NotNull final FrameAction<E> fun) throws E {
         try {
             executor(name)._(new InternalAction() {
                 @Nullable
@@ -71,9 +71,9 @@ public abstract class NamedStackFrame {
         }
     }
 
-    public <R, E extends Throwable> void stackLine(@NotNull final String name,
-                                                   @NotNull final Class<E> exception,
-                                                   @NotNull final UnderStackFunction<R, E> fun) throws E {
+    public <R, E extends Throwable> void frame(@NotNull final String name,
+                                               @NotNull final Class<E> exception,
+                                               @NotNull final FrameFunction<R, E> fun) throws E {
         try {
             executor(name)._(new InternalAction() {
                 @Nullable
@@ -91,11 +91,11 @@ public abstract class NamedStackFrame {
         }
     }
 
-    public interface UnderStackAction<E extends Throwable> {
+    public interface FrameAction<E extends Throwable> {
         void execute() throws E;
     }
 
-    public interface UnderStackFunction<R, E extends Throwable> {
+    public interface FrameFunction<R, E extends Throwable> {
         R execute() throws E;
     }
 

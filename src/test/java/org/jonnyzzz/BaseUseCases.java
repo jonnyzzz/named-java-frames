@@ -19,7 +19,7 @@ public abstract class BaseUseCases {
     public void test_names_clash_execute() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().stackLine("execute", Throwable.class, new NamedStackFrame.UnderStackAction<Throwable>() {
+        call().frame("execute", Throwable.class, new NamedStackFrame.FrameAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
             }
@@ -33,7 +33,7 @@ public abstract class BaseUseCases {
     public void test_names_clash_toString() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().stackLine("toString", Throwable.class, new NamedStackFrame.UnderStackAction<Throwable>() {
+        call().frame("toString", Throwable.class, new NamedStackFrame.FrameAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
             }
@@ -47,7 +47,7 @@ public abstract class BaseUseCases {
     public void test_action() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().stackLine("someMagicTestName", Throwable.class, new NamedStackFrame.UnderStackAction<Throwable>() {
+        call().frame("someMagicTestName", Throwable.class, new NamedStackFrame.FrameAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
 
@@ -62,7 +62,7 @@ public abstract class BaseUseCases {
     public void test_runnable() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().stackLine("someMagicTestName", new Runnable() {
+        call().frame("someMagicTestName", new Runnable() {
             public void run() {
                 result.set(stackTrace());
             }
@@ -76,7 +76,7 @@ public abstract class BaseUseCases {
     public void test_callable() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().stackLine("someMagicTestName", new Callable<Object>() {
+        call().frame("someMagicTestName", new Callable<Object>() {
             public Object call() {
                 result.set(stackTrace());
                 return 42;
@@ -90,7 +90,7 @@ public abstract class BaseUseCases {
     @Test
     public void test_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().stackLine("someMagicTestName", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
+        call().frame("someMagicTestName", Throwable.class, new NamedStackFrame.FrameFunction<Object, Throwable>() {
             @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
@@ -105,7 +105,7 @@ public abstract class BaseUseCases {
     @Test
     public void test_long_names_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().stackLine("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
+        call().frame("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.FrameFunction<Object, Throwable>() {
             @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
@@ -123,7 +123,7 @@ public abstract class BaseUseCases {
         final AtomicInteger result = new AtomicInteger();
         final NamedStackFrame call = call();
         for(int i = 0 ; i < 10 * 1000; i++) {
-            call.stackLine("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.UnderStackFunction<Object, Throwable>() {
+            call.frame("вот это вот тут так получилось", Throwable.class, new NamedStackFrame.FrameFunction<Object, Throwable>() {
                 @NotNull
                 public Object execute() throws Throwable {
                     result.incrementAndGet();
