@@ -10,7 +10,7 @@ import org.jonnyzzz.stack.impl.NamedExecutor;
  */
 public class StubExecutorImpl implements NamedExecutor {
     @Nullable
-    public Object execute(@NotNull InternalAction action) throws Throwable {
+    public Object _(@NotNull InternalAction action) throws Throwable {
         return action.execute();
     }
 }

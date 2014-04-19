@@ -20,7 +20,7 @@ public abstract class NamedStackFrame {
                            @NotNull final Callable<V> fun) throws Exception {
         try {
             //noinspection unchecked
-            return (V) executor(name).execute(new InternalAction() {
+            return (V) executor(name)._(new InternalAction() {
                 @Nullable
                 public Object execute() throws Exception {
                     return fun.call();
@@ -39,7 +39,7 @@ public abstract class NamedStackFrame {
                           @NotNull final Runnable fun) {
 
         try {
-            executor(name).execute(new InternalAction() {
+            executor(name)._(new InternalAction() {
                 @Nullable
                 public Object execute() throws Throwable {
                     fun.run();
@@ -55,7 +55,7 @@ public abstract class NamedStackFrame {
                                                 @NotNull final Class<E> exception,
                                                 @NotNull final UnderStackAction<E> fun) throws E {
         try {
-            executor(name).execute(new InternalAction() {
+            executor(name)._(new InternalAction() {
                 @Nullable
                 public Object execute() throws Throwable {
                     fun.execute();
@@ -75,7 +75,7 @@ public abstract class NamedStackFrame {
                                                    @NotNull final Class<E> exception,
                                                    @NotNull final UnderStackFunction<R, E> fun) throws E {
         try {
-            executor(name).execute(new InternalAction() {
+            executor(name)._(new InternalAction() {
                 @Nullable
                 public Object execute() throws Throwable {
                     fun.execute();

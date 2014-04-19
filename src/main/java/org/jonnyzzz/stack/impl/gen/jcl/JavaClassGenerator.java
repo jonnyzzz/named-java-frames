@@ -14,7 +14,6 @@ import java.util.Arrays;
 public class JavaClassGenerator {
     public static final Class<?> TEMPLATE = JavaGeneratorTemplate.class;
     public static final byte[] CLASS_NAME_BYTES = UTF.encode(TEMPLATE.getName().replace('.', '/'));
-    public static final byte[] METHOD_NAME_BYTES = UTF.encode("this_is_a_special_name_placeholder");
 
     @NotNull
     private static byte[] loadClazzTemplate() {
@@ -56,9 +55,7 @@ public class JavaClassGenerator {
                 case 0x1:
                     byte[] text = tmpl.next((tmpl.next() << 8) + tmpl.next());
 
-                    if (Arrays.equals(text, METHOD_NAME_BYTES)) {
-                        text = UTF.encode(methodName);
-                    } else if (Arrays.equals(text, CLASS_NAME_BYTES)) {
+                    if (Arrays.equals(text, CLASS_NAME_BYTES)) {
                         text = UTF.encode(className.replace('.', '/'));
                     }
 
