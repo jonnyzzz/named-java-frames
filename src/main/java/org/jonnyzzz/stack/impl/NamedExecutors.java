@@ -43,6 +43,12 @@ public class NamedExecutors {
 
     @NotNull
     private static NamedExecutor generateImpl(@NotNull final String name) {
+        //avoid bytecode error
+        if ("execute".equals(name)) {
+            return new StubExecutorImpl();
+        }
+
+
         try {
             return myLoader.generate(name);
         } catch (Throwable t) {

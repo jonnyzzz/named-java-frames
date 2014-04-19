@@ -16,6 +16,34 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AppTest {
 
     @Test
+    public void test_names_clash_execute() throws Throwable {
+
+        final AtomicReference<String> result = new AtomicReference<String>();
+        StackLine.stackLine("execute", Throwable.class, new StackLine.UnderStackAction<Throwable>() {
+            public void execute() throws Throwable {
+                result.set(stackTrace());
+            }
+        });
+
+        final String s = result.get();
+        Assert.assertTrue(s, s.contains("execute"));
+    }
+
+    @Test
+    public void test_names_clash_toString() throws Throwable {
+
+        final AtomicReference<String> result = new AtomicReference<String>();
+        StackLine.stackLine("toString", Throwable.class, new StackLine.UnderStackAction<Throwable>() {
+            public void execute() throws Throwable {
+                result.set(stackTrace());
+            }
+        });
+
+        final String s = result.get();
+        Assert.assertTrue(s, s.contains("toString"));
+    }
+
+    @Test
     public void test_action() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
