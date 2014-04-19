@@ -1,6 +1,7 @@
-package org.jonnyzzz.stack.impl;
+package org.jonnyzzz.stack.impl.gen.jcl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jonnyzzz.stack.impl.UTF;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

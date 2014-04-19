@@ -1,7 +1,7 @@
 package org.jonnyzzz;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.impl.NamedExecutorImpl;
+import org.jonnyzzz.stack.impl.gen.jcl.NamedExecutorImpl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
