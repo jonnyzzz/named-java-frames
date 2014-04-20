@@ -36,19 +36,19 @@ import static org.jonnyzzz.stack.NamedStackFrame.FrameFunction;
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class JavaGeneratorTemplate implements NamedExecutor {
-    public final <V> V _(@NotNull Callable<V> fun) throws Exception {
+    public final <V> V __(@NotNull Callable<V> fun) throws Exception {
         return fun.call();
     }
 
-    public final void _(@NotNull Runnable fun) {
+    public final void __(@NotNull Runnable fun) {
         fun.run();
     }
 
-    public final <E extends Throwable> void _(@NotNull FrameAction<E> fun) throws E {
+    public final <E extends Throwable> void __(@NotNull FrameAction<E> fun) throws E {
         fun.execute();
     }
 
-    public final <R, E extends Throwable> R _(@NotNull FrameFunction<R, E> fun) throws E {
+    public final <R, E extends Throwable> R __(@NotNull FrameFunction<R, E> fun) throws E {
         return fun.execute();
     }
 }

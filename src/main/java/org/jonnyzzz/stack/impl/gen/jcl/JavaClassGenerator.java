@@ -58,9 +58,9 @@ public class JavaClassGenerator {
     }
 
     @NotNull
-    public static byte[] generateWrapper(@NotNull final String className, @NotNull final String methodName) {
+    public static byte[] generateWrapper(@NotNull final String className) {
         final ByteIterator tmpl = new ByteIterator(loadClazzTemplate());
-        final ByteWriter result = new ByteWriter(tmpl.size() + 6 * className.length() + 6 * methodName.length());
+        final ByteWriter result = new ByteWriter(tmpl.size() + 6 * className.length());
 
         result.addBytes(tmpl.next(4)); //0xCAFEBABE
         result.addBytes(tmpl.next(4)); //version

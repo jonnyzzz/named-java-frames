@@ -42,8 +42,8 @@ public class JavaClassLoaderGenerator extends ClassLoader implements NamedExecut
 
     @NotNull
     public NamedExecutor generate(@NotNull final String name) {
-        final String clazz = "_." + name;
-        final byte[] bytes = JavaClassGenerator.generateWrapper(clazz, "_");
+        final String clazz = "__." + name;
+        final byte[] bytes = JavaClassGenerator.generateWrapper(clazz);
 
         definePackage(clazz);
         final Class<?> aClass = defineClazz(clazz, bytes);

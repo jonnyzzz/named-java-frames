@@ -35,8 +35,8 @@ import static org.jonnyzzz.stack.NamedStackFrame.FrameFunction;
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public interface NamedExecutor {
-    <V> V _(@NotNull final Callable<V> fun) throws Exception;
-    void _(@NotNull final Runnable fun);
-    <E extends Throwable> void _(@NotNull final FrameAction<E> fun) throws E;
-    <R, E extends Throwable> R _(@NotNull final FrameFunction<R, E> fun) throws E;
+    <V> V __(@NotNull final Callable<V> fun) throws Exception;
+    void __(@NotNull final Runnable fun);
+    <E extends Throwable> void __(@NotNull final FrameAction<E> fun) throws E;
+    <R, E extends Throwable> R __(@NotNull final FrameFunction<R, E> fun) throws E;
 }

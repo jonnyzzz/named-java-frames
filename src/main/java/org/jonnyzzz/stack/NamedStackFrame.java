@@ -40,23 +40,23 @@ import java.util.concurrent.Callable;
 public abstract class NamedStackFrame {
     public <V> V frame(@NotNull final String name,
                        @NotNull final Callable<V> fun) throws Exception {
-        return executor(name)._(fun);
+        return executor(name).__(fun);
     }
 
     public void frame(@NotNull final String name,
                       @NotNull final Runnable fun) {
-        executor(name)._(fun);
+        executor(name).__(fun);
     }
 
     public <E extends Throwable> void frame(@NotNull final String name,
                                             @NotNull final FrameAction<E> fun) throws E {
-        executor(name)._(fun);
+        executor(name).__(fun);
     }
 
     public <R, E extends Throwable> R frame(@NotNull final String name,
                                             @NotNull final FrameFunction<R, E> fun) throws E {
 
-        return executor(name)._(fun);
+        return executor(name).__(fun);
     }
 
     public interface FrameAction<E extends Throwable> {
