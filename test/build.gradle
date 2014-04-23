@@ -1,0 +1,24 @@
+
+apply plugin: 'java'
+apply plugin:'application'
+
+dependencies {
+  
+  compile 'org.jonnyzzz:named-frames:0.1.0-SNAPSHOT'
+
+}
+
+
+repositories {
+  maven {
+    url "https://github.com/jonnyzzz/maven-repo/raw/master/snapshots"
+  }
+
+}
+
+jar {
+  
+ }
+
+
+mainClassName = "org.gradle.sample.Main"
