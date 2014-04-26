@@ -66,3 +66,9 @@ Binaries could be downloaded from [GitHub](https://github.com/jonnyzzz/maven-rep
 You may use the following maven repository: ```https://github.com/jonnyzzz/maven-repo/raw/master/snapshots```
 and artifact ```org.jonnyzzz:named-frames:0.1.0-SNAPSHOT```
 
+Note
+====
+This is my (Eugene Petrenko) private home project
+
+Support me:
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AYHRF77JDGPLA)
