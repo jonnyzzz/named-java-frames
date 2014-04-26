@@ -30,6 +30,8 @@ There could be a number of nice use-cases for the library, for example
 - include heavy task details into the stack
 - and much more!
 
+For more details, see the related [blog post](http://blog.jonnyzzz.name/2014/04/named-stack-frames-for-jvm.html)
+
 
 Dependencies
 ------------
