@@ -10,8 +10,7 @@ into the application stacktrace. The resulting stacktrace should be the
 following:
 
         java.lang.Exception
-        	at com.some.corp.something.crashTheJob(SomeOtherOtherSource.java:42)
-        	at com.some.corp.something.toItNow(SomeOtherSource.java:52)
+        	at com.some.corp.something.Object.run
         	at _.this is my named frame._(JavaGeneratorTemplate.java:24)
         	at org.jonnyzzz.stack.NamedStackFrame.frame(NamedStackFrame.java:29)
         	at com.some.corp.something.toTheJob(SomeSource.java:50)
@@ -57,4 +56,11 @@ Builds
 
 [![Build Status](https://travis-ci.org/jonnyzzz/named-java-frames.svg?branch=master)](https://travis-ci.org/jonnyzzz/named-java-frames)
 
-TBD
+Binaries
+--------
+
+Binaries could be downloaded from [GitHub](https://github.com/jonnyzzz/maven-repo/tree/master/snapshots/org/jonnyzzz/named-frames/0.1.0-SNAPSHOT)
+
+You may use the following maven repository: ```https://github.com/jonnyzzz/maven-repo/raw/master/snapshots```
+and artifact ```org.jonnyzzz:named-frames:0.1.0-SNAPSHOT```
+
