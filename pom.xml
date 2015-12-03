@@ -118,9 +118,17 @@
         </profile>
     </profiles>
 
+    <distributionManagement>
+      <repository>
+        <id>repo.labs.intellij.net</id>
+        <name>repo.labs.intellij.net-releases</name>
+        <url>http://repo.labs.intellij.net/thirdparty</url>
+      </repository>
+    </distributionManagement>
+
     <build>
         <finalName>
-            ${project.artifactId}-${project.version}-${buildNumber}
+            ${project.artifactId}-${buildNumber}
         </finalName>
         <plugins>
             <plugin>
