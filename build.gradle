@@ -89,7 +89,7 @@ configure(project(':named-frames-kotlin')) {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '3.0'
+  gradleVersion = '2.14.1'
 }
 
 task bintrayUploadEx {
