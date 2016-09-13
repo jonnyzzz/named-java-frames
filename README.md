@@ -1,6 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/jonnyzzz/maven/named-frames/images/download.svg) ](https://bintray.com/jonnyzzz/maven/named-frames/_latestVersion)
-
-[ ![Build Status](https://travis-ci.org/jonnyzzz/named-java-frames.svg?branch=master)](https://travis-ci.org/jonnyzzz/named-java-frames)
+[ ![Download](https://api.bintray.com/packages/jonnyzzz/maven/named-frames/images/download.svg) ](https://bintray.com/jonnyzzz/maven/named-frames/_latestVersion) [ ![Build Status](https://travis-ci.org/jonnyzzz/named-java-frames.svg?branch=master)](https://travis-ci.org/jonnyzzz/named-java-frames)
 
 named-frames
 ============
@@ -54,11 +52,13 @@ For more details, see LICENSE.txt in the repository
 Building
 --------
 
-The project is build with Maven
+The project is build with gradle
 
 
 Binaries
 --------
+[ ![Download](https://api.bintray.com/packages/jonnyzzz/maven/named-frames/images/download.svg) ](https://bintray.com/jonnyzzz/maven/named-frames/_latestVersion) 
+
 Binaries are uploaded to *jcenter*
 Gradle: just add
 ```
