@@ -43,7 +43,7 @@ public abstract class BaseUseCases {
     public void test_names_clash_execute() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("execute", new NamedStackFrame.FrameAction<Throwable>() {
+        call().action("execute", new NamedStackFrame.FrameAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
             }
@@ -57,7 +57,7 @@ public abstract class BaseUseCases {
     public void test_names_clash_toString() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("toString", new NamedStackFrame.FrameAction<Throwable>() {
+        call().action("toString", new NamedStackFrame.FrameAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
             }
@@ -71,7 +71,7 @@ public abstract class BaseUseCases {
     public void test_action() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("someMagicTestName", new NamedStackFrame.FrameAction<Throwable>() {
+        call().action("someMagicTestName", new NamedStackFrame.FrameAction<Throwable>() {
             public void execute() throws Throwable {
                 result.set(stackTrace());
 
@@ -85,7 +85,7 @@ public abstract class BaseUseCases {
     @Test
     public void test_runnable() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("someMagicTestName", new Runnable() {
+        call().run("someMagicTestName", new Runnable() {
             public void run() {
                 result.set(stackTrace());
             }
@@ -99,7 +99,7 @@ public abstract class BaseUseCases {
     public void test_callable() throws Throwable {
 
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("someMagicTestName", new Callable<Object>() {
+        call().call("someMagicTestName", new Callable<Object>() {
             public Object call() {
                 result.set(stackTrace());
                 return 42;
@@ -113,7 +113,7 @@ public abstract class BaseUseCases {
     @Test
     public void test_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("someMagicTestName", new NamedStackFrame.FrameFunction<Object, Throwable>() {
+        call().function("someMagicTestName", new NamedStackFrame.FrameFunction<Object, Throwable>() {
             @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
@@ -128,7 +128,7 @@ public abstract class BaseUseCases {
     @Test
     public void test_generated_name_is_used_only_once() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("someMagicTestName", new Runnable() {
+        call().run("someMagicTestName", new Runnable() {
             public void run() {
                 result.set(stackTrace());
             }
@@ -146,7 +146,7 @@ public abstract class BaseUseCases {
     @Test
     public void test_long_names_function() throws Throwable {
         final AtomicReference<String> result = new AtomicReference<String>();
-        call().frame("вот это вот тут так получилось", new NamedStackFrame.FrameFunction<Object, Throwable>() {
+        call().function("вот это вот тут так получилось", new NamedStackFrame.FrameFunction<Object, Throwable>() {
             @NotNull
             public Object execute() throws Throwable {
                 result.set(stackTrace());
@@ -164,7 +164,7 @@ public abstract class BaseUseCases {
         final AtomicInteger result = new AtomicInteger();
         final NamedStackFrame call = call();
         for(int i = 0 ; i < 10 * 1000; i++) {
-            call.frame("вот это вот тут так получилось", new NamedStackFrame.FrameFunction<Object, Throwable>() {
+            call.function("вот это вот тут так получилось", new NamedStackFrame.FrameFunction<Object, Throwable>() {
                 @NotNull
                 public Object execute() throws Throwable {
                     result.incrementAndGet();
