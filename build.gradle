@@ -33,6 +33,7 @@ subprojects {
     testLogging.showStandardStreams = true
   }
 
+  apply plugin: 'maven'
   apply plugin: 'maven-publish'
   apply plugin: "com.jfrog.bintray"
 
@@ -62,7 +63,7 @@ subprojects {
       publications = ['mavenJava']
       pkg {
         repo = 'maven'
-        name = 'kotlin.xml.dsl'
+        name = 'named-frames'
         userOrg = getProperty('bintrayUser')
         licenses = ['MIT']
         vcsUrl = 'https://github.com/jonnyzzz/named-frames'
@@ -77,7 +78,7 @@ configure(project(':named-frames')) {
   }
 }
 
-configure(project(':kotlin')) {
+configure(project(':named-frames-kotlin')) {
   apply plugin: 'kotlin'
 
   dependencies {
@@ -92,11 +93,11 @@ task wrapper(type: Wrapper) {
 }
 
 task bintrayUploadEx {
-  dependsOn ':core:bintrayUpload'
-  dependsOn ':kotlin:bintrayUpload'
+  dependsOn project(':named-frames').tasks.bintrayUpload
+  dependsOn project(':named-frames-kotlin').tasks.bintrayUpload
 }
 
 task localUploadEx {
-  dependsOn ':core:publishToLocalMaven'
-  dependsOn ':kotlin:publishToLocalMaven'
+  dependsOn { ':named-frames:publishToLocalMaven' }
+  dependsOn { ':named-frames-kotlin:publishToLocalMaven' }
 }
