@@ -1,3 +1,7 @@
+[ ![Download](https://api.bintray.com/packages/jonnyzzz/maven/named-frames/images/download.svg) ](https://bintray.com/jonnyzzz/maven/named-frames/_latestVersion)
+
+[ ![Build Status](https://travis-ci.org/jonnyzzz/named-java-frames.svg?branch=master)](https://travis-ci.org/jonnyzzz/named-java-frames)
+
 named-frames
 ============
 
@@ -17,7 +21,7 @@ following:
 
 This is done via the following code with the library
 
-        NamedStackFrame.global().frame("this is my named frame",
+        NamedStackFrame.global().run("this is my named frame",
             new Runnable() {
                 public void run() {
                      //here goes the code
@@ -53,18 +57,21 @@ Building
 The project is build with Maven
 
 
-Builds
-------
-
-[![Build Status](https://travis-ci.org/jonnyzzz/named-java-frames.svg?branch=master)](https://travis-ci.org/jonnyzzz/named-java-frames)
-
 Binaries
 --------
+Binaries are uploaded to *jcenter*
+Gradle: just add
+```
+repositories {
+  jcenter()
+}
 
-Binaries could be downloaded from [GitHub](https://github.com/jonnyzzz/maven-repo/tree/master/snapshots/org/jonnyzzz/named-frames/0.1.0-SNAPSHOT)
+dependencies {
+  compile 'org.jonnyzzz.named-frames:named-frames:<LATEST VERSION>'
+}
+```
 
-You may use the following maven repository: ```https://github.com/jonnyzzz/maven-repo/raw/master/snapshots```
-and artifact ```org.jonnyzzz:named-frames:0.1.0-SNAPSHOT```
+See [here](https://bintray.com/jonnyzzz/maven/named-frames) for more details
 
 Note
 ====
