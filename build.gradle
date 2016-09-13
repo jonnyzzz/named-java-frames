@@ -71,7 +71,7 @@ subprojects {
   }
 }
 
-configure(project(':core')) {
+configure(project(':named-frames')) {
   dependencies {
     compile 'org.jetbrains:annotations:15.0'
   }
@@ -83,7 +83,7 @@ configure(project(':kotlin')) {
   dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    compile project(':core')
+    compile project(':named-frames')
   }
 }
 
