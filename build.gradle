@@ -1,0 +1,102 @@
+buildscript {
+  ext.kotlin_version = '1.0.3'
+
+  repositories { mavenCentral() }
+  dependencies { classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" }
+}
+
+plugins {
+  id "com.jfrog.bintray" version "1.5"
+}
+
+version = project.hasProperty('teamcity') ? project['teamcity']['build.number'] : 'SNAPSHOT'
+
+subprojects {
+  apply plugin: 'java'
+
+  group = 'org.jonnyzzz.named-frames'
+
+  sourceCompatibility = 1.6
+  targetCompatibility = 1.6
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+
+    testCompile "junit:junit:4.12"
+  }
+
+  test {
+    useJUnit()
+    testLogging.showStandardStreams = true
+  }
+
+  apply plugin: 'maven-publish'
+  apply plugin: "com.jfrog.bintray"
+
+  task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+  }
+
+  artifacts {
+    archives sourceJar
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+        artifact sourceJar {
+          classifier "sources"
+        }
+      }
+    }
+  }
+
+  if (rootProject.hasProperty("bintrayUser")) {
+    bintray {
+      user = getProperty('bintrayUser')
+      key = getProperty('bintrayApiKey')
+      publications = ['mavenJava']
+      pkg {
+        repo = 'maven'
+        name = 'kotlin.xml.dsl'
+        userOrg = getProperty('bintrayUser')
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/jonnyzzz/named-frames'
+      }
+    }
+  }
+}
+
+configure(project(':core')) {
+  dependencies {
+    compile 'org.jetbrains:annotations:15.0'
+  }
+}
+
+configure(project(':kotlin')) {
+  apply plugin: 'kotlin'
+
+  dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile project(':core')
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '3.0'
+}
+
+task bintrayUploadEx {
+  dependsOn ':core:bintrayUpload'
+  dependsOn ':kotlin:bintrayUpload'
+}
+
+task localUploadEx {
+  dependsOn ':core:publishToLocalMaven'
+  dependsOn ':kotlin:publishToLocalMaven'
+}
