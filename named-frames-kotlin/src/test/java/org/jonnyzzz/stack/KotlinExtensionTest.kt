@@ -1,5 +1,7 @@
-package org.jonnyzzz.stack
+package org.another.`package`.`for`.test
 
+import org.jonnyzzz.stack.NamedStackFrame
+import org.jonnyzzz.stack.wrap
 import org.junit.Assert
 import org.junit.Test
 import java.io.PrintWriter
