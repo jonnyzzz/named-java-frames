@@ -28,17 +28,26 @@ import org.jetbrains.annotations.NotNull;
 import org.jonnyzzz.stack.NamedExecutor;
 import org.jonnyzzz.stack.impl.gen.NamedExecutorsGenerator;
 
+import java.util.regex.Pattern;
+
 /**
-* @author Eugene Petrenko (eugene.petrenko@gmail.com)
-*/
+ * @author Eugene Petrenko (eugene.petrenko@gmail.com)
+ */
 public class JavaClassLoaderGenerator extends ClassLoader implements NamedExecutorsGenerator {
     public JavaClassLoaderGenerator() {
         super(NamedExecutor.class.getClassLoader());
     }
 
+    private static final Pattern INVALID_CLASS_NAMES = Pattern.compile("[\\[\\]/<>;]");
+
+    @NotNull
+    private static String normalizeName(@NotNull final String name) {
+        return INVALID_CLASS_NAMES.matcher(name).replaceAll("_");
+    }
+
     @NotNull
     public NamedExecutor generate(@NotNull final String name) {
-        final String clazz = "__." + name + ".__";
+        final String clazz = normalizeName("__. " + name + " .__");
         final byte[] bytes = JavaClassGenerator.generateWrapper(clazz);
 
         definePackage(clazz);

@@ -35,12 +35,36 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.jonnyzzz.Stack.stackTrace;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public abstract class BaseUseCases {
+    @Test
+    public void test_names_invalid() throws Throwable {
+        // https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html
+
+        final String brokenName = " . ; [ / < >";
+
+        final AtomicReference<String> result = new AtomicReference<String>();
+        call().forName(brokenName).action(new FrameAction<Throwable>() {
+            public void action() throws Throwable {
+                RRR();
+            }
+
+            private void RRR() {
+                result.set(stackTrace());
+            }
+        });
+
+        final String s = result.get();
+        Assert.assertThat(s, not(containsString("__FailedToCreateNamedExecutor__")));
+        Assert.assertThat(s, containsString("RRR"));
+    }
+
     @Test
     public void test_names_clash_execute() throws Throwable {
 
