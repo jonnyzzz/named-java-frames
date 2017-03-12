@@ -28,14 +28,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jonnyzzz.stack.impl.NamedExecutor;
 import org.jonnyzzz.stack.impl.gen.NamedExecutorsGenerator;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
 * @author Eugene Petrenko (eugene.petrenko@gmail.com)
 */
 public class JavaClassLoaderGenerator extends ClassLoader implements NamedExecutorsGenerator {
-    private final AtomicInteger myCounter = new AtomicInteger();
-
     public JavaClassLoaderGenerator() {
         super(NamedExecutor.class.getClassLoader());
     }
