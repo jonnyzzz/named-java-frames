@@ -14,12 +14,11 @@ following:
         java.lang.Exception
         	at com.some.corp.something.Object.run
         	at _.this is my named frame._(JavaGeneratorTemplate.java:24)
-        	at org.jonnyzzz.stack.NamedStackFrame.frame(NamedStackFrame.java:29)
         	at com.some.corp.something.toTheJob(SomeSource.java:50)
 
 This is done via the following code with the library
 
-        NamedStackFrame.global().run("this is my named frame",
+        NamedStackFrame.global().forName("this is my named frame").run(
             new Runnable() {
                 public void run() {
                      //here goes the code
@@ -72,6 +71,8 @@ dependencies {
 ```
 
 See [here](https://bintray.com/jonnyzzz/maven/named-frames) for more details
+
+Please note, the `1.1.x` version is not compatible to `1.0.x` version!
 
 Note
 ====
