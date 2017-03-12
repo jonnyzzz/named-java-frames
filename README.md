@@ -72,7 +72,7 @@ dependencies {
 
 See [here](https://bintray.com/jonnyzzz/maven/named-frames) for more details
 
-Please note, the `1.1.x` version is not compatible to `1.0.x` version!
+Please note, the `0.1.x` version is not compatible to `0.2.x` version!
 
 Note
 ====
