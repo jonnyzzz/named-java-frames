@@ -1,5 +1,5 @@
 buildscript {
-  ext.kotlin_version = '1.0.6'
+  ext.kotlin_version = '1.1.0'
 
   repositories { mavenCentral() }
   dependencies { classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" }
@@ -56,7 +56,7 @@ subprojects {
     }
   }
 
-  if (rootProject.hasProperty("bintrayUser")) {
+  if (hasProperty('bintrayUser')) {
     bintray {
       user = getProperty('bintrayUser')
       key = getProperty('bintrayApiKey')
@@ -81,6 +81,18 @@ configure(project(':named-frames')) {
 configure(project(':named-frames-kotlin')) {
   apply plugin: 'kotlin'
 
+  compileKotlin {
+    kotlinOptions {
+      jvmTarget = "1.6"
+    }
+  }
+
+  compileTestKotlin {
+    kotlinOptions {
+      jvmTarget = "1.6"
+    }
+  }
+  
   dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -89,7 +101,7 @@ configure(project(':named-frames-kotlin')) {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.14.1'
+  gradleVersion = '3.4.1'
 }
 
 task bintrayUploadEx {
