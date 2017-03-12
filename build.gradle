@@ -27,6 +27,8 @@ subprojects {
 
   test {
     useJUnit()
+    maxHeapSize = "32m"
+    jvmArgs "-XX:MaxPermSize=32m"
   }
 
   apply plugin: 'maven'
