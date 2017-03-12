@@ -24,6 +24,7 @@
 
 package org.jonnyzzz.stack.impl.gen.stub;
 
+import __.__FailedToCreateNamedExecutor__;
 import org.jetbrains.annotations.NotNull;
 import org.jonnyzzz.stack.NamedExecutor;
 import org.jonnyzzz.stack.impl.gen.NamedExecutorsGenerator;
@@ -31,9 +32,16 @@ import org.jonnyzzz.stack.impl.gen.NamedExecutorsGenerator;
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
-public class EmptyExecutorsGenerator implements NamedExecutorsGenerator {
+public final class FailedToCreateNamedExecutorsGenerator implements NamedExecutorsGenerator {
+    public static final NamedExecutor EXECUTOR = new __FailedToCreateNamedExecutor__();
+    public static final NamedExecutorsGenerator INSTANCE = new FailedToCreateNamedExecutorsGenerator();
+
+    private FailedToCreateNamedExecutorsGenerator() {
+    }
+
     @NotNull
-    public NamedExecutor generate(@NotNull String name) {
-        return new StubExecutorImpl();
+    @Override
+    public final NamedExecutor generate(@NotNull String name) {
+        return EXECUTOR;
     }
 }

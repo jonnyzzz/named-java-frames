@@ -29,9 +29,9 @@ import org.jonnyzzz.stack.NamedExecutor;
 import org.jonnyzzz.stack.NamedStackFrame;
 import org.jonnyzzz.stack.impl.gen.NamedExecutorsGenerator;
 import org.jonnyzzz.stack.impl.gen.jcl.JavaClassLoaderGenerator;
-import org.jonnyzzz.stack.impl.gen.stub.EmptyExecutorsGenerator;
-import org.jonnyzzz.stack.impl.gen.stub.StubExecutorImpl;
+import org.jonnyzzz.stack.impl.gen.stub.FailedToCreateNamedExecutorsGenerator;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -40,12 +40,14 @@ import java.util.logging.Logger;
 public class NamedExecutors implements NamedExecutorsGenerator {
     private final NamedExecutorsGenerator myLoader = init();
 
+    @NotNull
     private NamedExecutorsGenerator init() {
         try {
             return new JavaClassLoaderGenerator();
         } catch (Throwable t) {
-            logger().warning("Failed to initialize proxy for NamedStackFrame. " + t.getMessage() + ". Default proxy will be used");
-            return new EmptyExecutorsGenerator();
+            final String massage = "Failed to initialize proxy for NamedStackFrame. " + t.getMessage() + ". Default proxy will be used";
+            logError(massage, t);
+            return FailedToCreateNamedExecutorsGenerator.INSTANCE;
         }
     }
 
@@ -55,13 +57,12 @@ public class NamedExecutors implements NamedExecutorsGenerator {
             return myLoader.generate(name);
         } catch (Throwable t) {
             //failed to generate the proxy, so we fallback
-            logger().warning("Failed to generate proxy for NamedStackFrame with name '" + name + "'. " + t.getMessage() + ". Default proxy will be used");
-            return new StubExecutorImpl();
+            logError("Failed to generate proxy for NamedStackFrame with name '" + name + "'. " + t.getMessage() + ". Default proxy will be used", t);
+            return FailedToCreateNamedExecutorsGenerator.INSTANCE.generate(name);
         }
     }
 
-    @NotNull
-    private Logger logger() {
-        return Logger.getLogger(NamedStackFrame.class.getName());
+    private static void logError(@NotNull final String massage, @NotNull final Throwable t) {
+        Logger.getLogger(NamedStackFrame.class.getName()).log(Level.SEVERE, massage, t);
     }
 }

@@ -22,13 +22,12 @@
  * THE SOFTWARE.
  */
 
-package org.jonnyzzz.stack.impl.gen.stub;
+package __;
 
-import org.jonnyzzz.stack.NamedExecutor;
 import org.jonnyzzz.stack.impl.gen.jcl.JavaGeneratorTemplate;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
-public class StubExecutorImpl extends JavaGeneratorTemplate implements NamedExecutor {
+public final class __FailedToCreateNamedExecutor__ extends JavaGeneratorTemplate {
 }
