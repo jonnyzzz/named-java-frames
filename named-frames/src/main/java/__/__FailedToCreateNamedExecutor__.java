@@ -24,10 +24,39 @@
 
 package __;
 
-import org.jonnyzzz.stack.impl.gen.jcl.JavaGeneratorTemplate;
+import org.jetbrains.annotations.NotNull;
+import org.jonnyzzz.stack.FrameAction;
+import org.jonnyzzz.stack.FrameFunction;
+import org.jonnyzzz.stack.NamedExecutor;
+
+import java.util.concurrent.Callable;
 
 /**
+ * A dumb implementation of the function that is declared in a dedicated
+ * namespace to be easier to spot
+ *
+ * The object is only used in case we failed to generated correctly named class
+ *
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
-public final class __FailedToCreateNamedExecutor__ extends JavaGeneratorTemplate {
+public final class __FailedToCreateNamedExecutor__ implements NamedExecutor{
+    @Override
+    public <V> V call(@NotNull Callable<V> fun) throws Exception {
+        return fun.call();
+    }
+
+    @Override
+    public void run(@NotNull Runnable fun) {
+        fun.run();
+    }
+
+    @Override
+    public <E extends Throwable> void action(@NotNull FrameAction<E> fun) throws E {
+        fun.action();
+    }
+
+    @Override
+    public <R, E extends Throwable> R execute(@NotNull FrameFunction<R, E> fun) throws E {
+        return fun.execute();
+    }
 }
