@@ -28,8 +28,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Callable;
 
-import static org.jonnyzzz.stack.NamedStackFrame.FrameAction;
-import static org.jonnyzzz.stack.NamedStackFrame.FrameFunction;
+import org.jonnyzzz.stack.FrameAction;
+import org.jonnyzzz.stack.FrameFunction;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)

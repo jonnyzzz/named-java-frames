@@ -25,9 +25,7 @@
 package org.jonnyzzz.stack;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.impl.CachedNamedExecutors;
-import org.jonnyzzz.stack.impl.NamedExecutor;
-import org.jonnyzzz.stack.impl.NamedExecutors;
+import org.jonnyzzz.stack.impl.*;
 
 import java.util.concurrent.Callable;
 
@@ -57,14 +55,6 @@ public abstract class NamedStackFrame {
                                                @NotNull final FrameFunction<R, E> fun) throws E {
 
         return executor(name).__(fun);
-    }
-
-    public interface FrameAction<E extends Throwable> {
-        void execute() throws E;
-    }
-
-    public interface FrameFunction<R, E extends Throwable> {
-        R execute() throws E;
     }
 
     @NotNull
@@ -100,19 +90,5 @@ public abstract class NamedStackFrame {
     @NotNull
     public static NamedStackFrame newInstance() {
         return new CachedNamedStackFrames();
-    }
-
-    private static class CachedNamedStackFrames extends NamedStackFrame {
-        private final CachedNamedExecutors myLoaders = new CachedNamedExecutors(new NamedExecutors());
-
-        @NotNull
-        @Override
-        protected NamedExecutor executor(@NotNull String name) {
-            return myLoaders.generate(name);
-        }
-    }
-
-    private static class GlobalCachedNamedStackFrames extends CachedNamedStackFrames {
-        private static final CachedNamedStackFrames INSTANCE = new GlobalCachedNamedStackFrames();
     }
 }
