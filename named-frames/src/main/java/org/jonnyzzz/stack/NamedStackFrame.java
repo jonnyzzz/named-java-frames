@@ -25,9 +25,8 @@
 package org.jonnyzzz.stack;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.impl.*;
-
-import java.util.concurrent.Callable;
+import org.jonnyzzz.stack.impl.CachedNamedStackFrames;
+import org.jonnyzzz.stack.impl.GlobalCachedNamedStackFrames;
 
 /**
  * Updates execution stack of the thread to contain a frame
@@ -36,25 +35,15 @@ import java.util.concurrent.Callable;
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public abstract class NamedStackFrame {
-    public <V> V call(@NotNull final String name,
-                      @NotNull final Callable<V> fun) throws Exception {
-        return executor(name).__(fun);
-    }
-
-    public void run(@NotNull final String name,
-                    @NotNull final Runnable fun) {
-        executor(name).__(fun);
-    }
-
-    public <E extends Throwable> void action(@NotNull final String name,
-                                             @NotNull final FrameAction<E> fun) throws E {
-        executor(name).__(fun);
-    }
-
-    public <R, E extends Throwable> R function(@NotNull final String name,
-                                               @NotNull final FrameFunction<R, E> fun) throws E {
-
-        return executor(name).__(fun);
+    /**
+     * Returns executor for a given name
+     * @param name string to include into as a stack frame
+     * @return executor
+     * @since 1.1
+     */
+    @NotNull
+    public final NamedExecutor forName(@NotNull final String name) {
+        return executor(name);
     }
 
     @NotNull

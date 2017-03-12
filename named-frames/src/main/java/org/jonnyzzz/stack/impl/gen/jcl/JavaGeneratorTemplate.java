@@ -25,30 +25,29 @@
 package org.jonnyzzz.stack.impl.gen.jcl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jonnyzzz.stack.FrameAction;
+import org.jonnyzzz.stack.FrameFunction;
 import org.jonnyzzz.stack.NamedExecutor;
 
 import java.util.concurrent.Callable;
-
-import org.jonnyzzz.stack.FrameAction;
-import org.jonnyzzz.stack.FrameFunction;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
 public class JavaGeneratorTemplate implements NamedExecutor {
-    public final <V> V __(@NotNull Callable<V> fun) throws Exception {
+    public final <V> V call(@NotNull Callable<V> fun) throws Exception {
         return fun.call();
     }
 
-    public final void __(@NotNull Runnable fun) {
+    public final void run(@NotNull Runnable fun) {
         fun.run();
     }
 
-    public final <E extends Throwable> void __(@NotNull FrameAction<E> fun) throws E {
-        fun.execute();
+    public final <E extends Throwable> void action(@NotNull FrameAction<E> fun) throws E {
+        fun.action();
     }
 
-    public final <R, E extends Throwable> R __(@NotNull FrameFunction<R, E> fun) throws E {
+    public final <R, E extends Throwable> R execute(@NotNull FrameFunction<R, E> fun) throws E {
         return fun.execute();
     }
 }

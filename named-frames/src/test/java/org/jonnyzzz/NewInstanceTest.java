@@ -41,7 +41,7 @@ public class NewInstanceTest extends BaseUseCases {
     @Test
     public void should_not_reach_permgen() {
         for (int i = 0; i < 10 * 1000; i++) {
-            call().run("test" + i, new Runnable() {
+            call().forName("test" + i).run(new Runnable() {
                 @Override
                 public void run() {
 

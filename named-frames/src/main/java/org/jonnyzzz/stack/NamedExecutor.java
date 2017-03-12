@@ -29,11 +29,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.Callable;
 
 /**
- * @author Eugene Petrenko (eugene.petrenko@gmail.com)
+ * A common interface to run execution with a named frame in it
+ * @since 1.1
  */
 public interface NamedExecutor {
-    <V> V __(@NotNull final Callable<V> fun) throws Exception;
-    void __(@NotNull final Runnable fun);
-    <E extends Throwable> void __(@NotNull final FrameAction<E> fun) throws E;
-    <R, E extends Throwable> R __(@NotNull final FrameFunction<R, E> fun) throws E;
+    <V> V call(@NotNull final Callable<V> fun) throws Exception;
+
+    void run(@NotNull final Runnable fun);
+
+    <E extends Throwable> void action(@NotNull final FrameAction<E> fun) throws E;
+
+    <R, E extends Throwable> R execute(@NotNull final FrameFunction<R, E> fun) throws E;
 }
