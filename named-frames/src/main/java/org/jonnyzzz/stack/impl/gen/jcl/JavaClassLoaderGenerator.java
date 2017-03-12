@@ -38,7 +38,7 @@ public class JavaClassLoaderGenerator extends ClassLoader implements NamedExecut
         super(NamedExecutor.class.getClassLoader());
     }
 
-    private static final Pattern INVALID_CLASS_NAMES = Pattern.compile("[\\[\\]/<>;]");
+    private static final Pattern INVALID_CLASS_NAMES = Pattern.compile("[\\[\\]/<>;\\p{C}\"\']");
 
     @NotNull
     private static String normalizeName(@NotNull final String name) {

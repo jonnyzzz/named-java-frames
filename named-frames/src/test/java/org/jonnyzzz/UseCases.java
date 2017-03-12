@@ -43,9 +43,10 @@ public final class UseCases extends BaseFixture {
     public void test_names_invalid() throws Throwable {
         // https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html
 
-        final String brokenName = " . ; [ / < >";
+        final String brokenName = " . ; [ / < > \0 \42\n\r\t";
 
         final String s = extractStack(brokenName);
+        System.out.println(s);
         Assert.assertThat(s, not(containsString("__FailedToCreateNamedExecutor__")));
     }
 
