@@ -24,7 +24,7 @@
 
 package org.jonnyzzz.stack.impl.gen.stub;
 
-import org.jonnyzzz.stack.impl.NamedExecutor;
+import org.jonnyzzz.stack.NamedExecutor;
 import org.jonnyzzz.stack.impl.gen.jcl.JavaGeneratorTemplate;
 
 /**

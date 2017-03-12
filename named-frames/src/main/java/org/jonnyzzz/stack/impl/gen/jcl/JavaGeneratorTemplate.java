@@ -25,7 +25,7 @@
 package org.jonnyzzz.stack.impl.gen.jcl;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.impl.NamedExecutor;
+import org.jonnyzzz.stack.NamedExecutor;
 
 import java.util.concurrent.Callable;
 

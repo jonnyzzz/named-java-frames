@@ -25,6 +25,7 @@
 package org.jonnyzzz.stack.impl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jonnyzzz.stack.NamedExecutor;
 import org.jonnyzzz.stack.impl.gen.NamedExecutorsGenerator;
 
 import java.util.concurrent.ConcurrentHashMap;
