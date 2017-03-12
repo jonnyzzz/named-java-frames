@@ -30,7 +30,6 @@ subprojects {
 
   test {
     useJUnit()
-    testLogging.showStandardStreams = true
   }
 
   apply plugin: 'maven'
