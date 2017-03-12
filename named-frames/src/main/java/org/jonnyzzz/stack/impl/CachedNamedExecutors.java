@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
-public class CachedNamedExecutors implements NamedExecutorsGenerator {
+public final class CachedNamedExecutors implements NamedExecutorsGenerator {
     private final ConcurrentHashMap<String, NamedExecutor> myLazyCache = new ConcurrentHashMap<String, NamedExecutor>();
     private final NamedExecutorsGenerator myLoader;
 
@@ -42,7 +42,7 @@ public class CachedNamedExecutors implements NamedExecutorsGenerator {
     }
 
     @NotNull
-    public NamedExecutor generate(@NotNull final String name) {
+    public final NamedExecutor generate(@NotNull final String name) {
         NamedExecutor executor = myLazyCache.get(name);
         if (executor != null) return executor;
 
