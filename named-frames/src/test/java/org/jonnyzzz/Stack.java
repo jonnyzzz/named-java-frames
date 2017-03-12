@@ -37,12 +37,15 @@ public class Stack {
     public static String stackTrace() {
         try {
             throw new Exception();
-        } catch (Exception e) {
-            final StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            System.out.printf(sw.toString());
-            return sw.toString();
+        } catch (Throwable e) {
+            return stack(e);
         }
     }
 
+    @NotNull
+    public static String stack(@NotNull final Throwable e) {
+        final StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        return sw.toString();
+    }
 }

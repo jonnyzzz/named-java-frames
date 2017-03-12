@@ -26,17 +26,24 @@ package org.jonnyzzz;
 
 import org.jetbrains.annotations.NotNull;
 import org.jonnyzzz.stack.NamedStackFrame;
+import org.junit.Test;
 
 /**
  * Unit test for simple App.
  */
-public class GlobalTest extends BaseUseCases {
-
-    @Override
+public class GlobalTest {
     @NotNull
     protected NamedStackFrame call() {
         return NamedStackFrame.global();
     }
 
-
+    @Test(timeout = 500)
+    public void test_should_not_generate_too_many_same_classes() throws Throwable {
+        ///this test should not slowdown
+        final NamedStackFrame call = call();
+        for(int i = 0 ; i < 10 * 1000; i++) {
+            //noinspection RedundantStringConstructorCall
+            call.forName(new String("same text"));
+        }
+    }
 }

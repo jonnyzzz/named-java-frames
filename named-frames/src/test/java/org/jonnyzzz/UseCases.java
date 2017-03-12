@@ -25,37 +25,47 @@
 package org.jonnyzzz;
 
 import org.jetbrains.annotations.NotNull;
-import org.jonnyzzz.stack.NamedStackFrame;
+import org.junit.Assert;
 import org.junit.Test;
+
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.StringContains.containsString;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
  */
-public class NewInstanceTest {
-    @NotNull
-    protected NamedStackFrame call() {
-        return NamedStackFrame.newInstance();
+public final class UseCases extends BaseFixture {
+    public UseCases(@NotNull ExecutorInstance instance, @NotNull ExecutorMethod method, @NotNull ExecutorMode mode) {
+        super(instance, method, mode);
     }
 
     @Test
-    public void should_not_reach_permgen() {
-        for (int i = 0; i < 10 * 1000; i++) {
-            call().forName("test" + i).run(new Runnable() {
-                @Override
-                public void run() {
+    public void test_names_invalid() throws Throwable {
+        // https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html
 
-                }
-            });
-        }
+        final String brokenName = " . ; [ / < >";
+
+        final String s = extractStack(brokenName);
+        Assert.assertThat(s, not(containsString("__FailedToCreateNamedExecutor__")));
     }
 
-    @Test(timeout = 500)
-    public void test_should_not_generate_too_many_same_classes() throws Throwable {
-        ///this test should not slowdown
-        final NamedStackFrame call = call();
-        for (int i = 0; i < 10 * 1000; i++) {
-            //noinspection RedundantStringConstructorCall
-            call.forName(new String("same text"));
-        }
+    @Test
+    public void test_basic() throws Throwable {
+        doTest("IDDQD-IDKFA-" + System.currentTimeMillis());
+    }
+
+    @Test
+    public void test_names_clash_execute() throws Throwable {
+        testExecutes("execute");
+    }
+
+    @Test
+    public void test_names_clash_to_string() throws Throwable {
+        testExecutes("toString");
+    }
+
+    @Test
+    public void test_long_names_function() throws Throwable {
+        doTest("вот это вот тут так получилось");
     }
 }
