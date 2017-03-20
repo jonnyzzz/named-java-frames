@@ -18,12 +18,9 @@ following:
 
 This is done via the following code with the library
 
-        NamedStackFrame.global().forName("this is my named frame").run(
-            new Runnable() {
-                public void run() {
-                     //here goes the code
-                }
-            });
+        NamedStackFrame.global().forName("YOUR NAME").run(() -> 
+                //the code is called from a method with YOUR NAME in the full name
+        });
 
 There could be a number of nice use-cases for the library, for example
 
