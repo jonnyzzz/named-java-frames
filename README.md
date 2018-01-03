@@ -74,6 +74,3 @@ Please note, the `0.1.x` version is not compatible to `0.2.x` version!
 Note
 ====
 This is my (Eugene Petrenko) private home project
-
-Support me:
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AYHRF77JDGPLA)
